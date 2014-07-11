@@ -10,6 +10,6 @@ Before using it, You have to install `python 2.x`.
 
 If you want to check `sample.txt` just type it.
 
-`
+```
 python kakaolog.py sample.txt
-`
+```
