@@ -13,3 +13,6 @@ If you want to check `sample.txt` just type it.
 ```
 python kakaolog.py sample.txt
 ```
+
+### [Check WebSite](http://katalklog.appspot.com)
+You can also use this app in http://katalklog.appspot.com
