@@ -25,4 +25,4 @@ def file_upload():
   for key in sorted_dic:
       result += "[%s]:%d " % (key, sorted_dic[key])
 
-  return result#render_template('result.html')
+  return result
