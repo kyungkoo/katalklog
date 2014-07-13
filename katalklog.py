@@ -13,46 +13,51 @@ def read_file(textfile):
     """
     Read *.txt file which is exported in KakaoTalk App.
     """
+    result = dict()
+
     with open(textfile,'r') as rf:
         for line in rf:
             if len(line) > 0:
-                _read_line(line)
+                each_line = read_line(line)
+                if each_line is not None:
+                  split_line = each_line.split(' ')
+                  for inner_line in split_line:
+                    word = inner_line.strip()
+                    if len(word) > 0:
+                      encoded = unicode(word)
+                      if encoded in result:
+                          result[encoded] = result[encoded] + 1
+                      else:
+                          result[encoded] = 1
+    return result
 
 
-def _read_line(line):
+def read_data(data):
+    result = dict()
+    for line in data:
+        if len(line) > 0:
+            each_line = read_line(line)
+            if each_line is not None:
+              split_line = each_line.split(' ')
+              for inner_line in split_line:
+                word = inner_line.strip()
+                if len(word) > 0:
+                  encoded = unicode(word)
+                  if encoded in result:
+                      result[encoded] = result[encoded] + 1
+                  else:
+                      result[encoded] = 1
+    return result
+
+def read_line(line):
     """
     Read each line and seperate date and comments.
     """
     splited = line.split(':')
     if len(splited) > 2:
-        _read_word(splited[2].strip())
-
-
-word_dic = dict()
-
-
-def _read_word(line):
-    """
-    """
-    splited = line.split(' ')
-    for word in splited:
-        if len(word) > 0:
-            new_word = word.strip()
-            if len(new_word) > 0:
-                new_word = unicode(new_word)
-                if new_word in word_dic:
-                    word_dic[new_word] = word_dic[new_word] + 1
-                else:
-                    word_dic[new_word] = 1
-
-
-def print_dict(dic_source):
-    """
-    Print dict data looks like [word] : count
-    """
-    if len(dic_source) > 0:
-        for key in dic_source:
-            print "[%s] : %d" % (key, dic_source[key])
+      return splited[2].strip()
+    else:
+      return None
 
 
 def sorted_dict(raw_dic):
@@ -74,12 +79,21 @@ def _save_to_txtfile(dic_data):
             wf.write(line)
 
 
+def print_dict(dic_source):
+    """
+    Print dict data looks like [word] : count
+    """
+    if len(dic_source) > 0:
+        for key in dic_source:
+            print "[%s] : %d" % (key, dic_source[key])
+
+
 if __name__ == "__main__":
 
     if len(sys.argv)  > 1:
         input_file = sys.argv[1]
-        read_file(input_file)
-        sorted_dic = sorted_dict(word_dic)
+        result = read_file(input_file)
+        sorted_dic = sorted_dict(result)
         print_dict(sorted_dic)
     else:
         sys.stderr.write("You should add input txt file!\n")
