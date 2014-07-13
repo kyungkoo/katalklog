@@ -18,10 +18,12 @@ def read_file(textfile):
 
 
 def read_data(data):
+  """
+  """
   result = dict()
   for line in data:
       if len(line) > 0:
-          each_line = read_line(line)
+          each_line = _read_line(line)
           if each_line is not None:
             split_line = each_line.split(' ')
             for inner_line in split_line:
@@ -35,7 +37,7 @@ def read_data(data):
   return result
 
 
-def read_line(line):
+def _read_line(line):
   """
   Read each line and seperate date and comments.
   """
