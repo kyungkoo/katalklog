@@ -6,6 +6,8 @@ import katalklog
 
 app = Flask(__name__)
 
+limit = 20
+
 @app.route('/')
 def index_page():
   return render_template('index.html')
@@ -21,8 +23,21 @@ def file_upload():
 
   sorted_dic = katalklog.sorted_dict(data)
 
-  result = ""
-  for key in sorted_dic:
-      result += "[%s]:%d " % (key, sorted_dic[key])
+  result = dict()
 
-  return result
+  count = 0
+
+  for key in sorted_dic:
+    if count == 20:
+      break
+    result[key] = sorted_dic[key]
+    count+=1
+
+  return render_template('result.html',datas=result)
+
+
+@app.route('/sample')
+def sample_page():
+
+  arrays = {'Hello':20,'thankyou':10,'GoodNight':5,'Loveyou':40,'no':2}
+  return render_template('result.html',datas=arrays)

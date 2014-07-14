@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% autoescape true %}
 <html>
   <head>
     <meta charset="utf-8">
@@ -7,21 +8,27 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+
+  </head>
+  <body>
+
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
+
+      var chartData = [['Word', 'Count you used']];
+
+      {% for key in datas %}
+
+        chartData.push(['{{ key }}',{{ datas[key] }}]);
+      {% endfor %}
+
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
+        var data = google.visualization.arrayToDataTable(chartData);
 
         var options = {
-          title: 'My Daily Activities'
+          title: 'Words you used'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -29,8 +36,7 @@
       }
     </script>
 
-  </head>
-  <body>
     <div id="piechart" style="width: 900px; height: 500px;"></div>
   </body>
 </html>
+{% endautoescape %}
