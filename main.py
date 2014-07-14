@@ -23,15 +23,19 @@ def file_upload():
 
   sorted_dic = katalklog.sorted_dict(data)
 
-  result = dict()
+  if len(sorted_dic) > 20:
 
-  count = 0
+    result = dict()
 
-  for key in sorted_dic:
-    if count == 20:
-      break
-    result[key] = sorted_dic[key]
-    count+=1
+    count = 0
+
+    for key in sorted_dic:
+      if count == 20:
+        break
+      result[key] = sorted_dic[key]
+      count+=1
+  else:
+    return render_template('result.html',datas=sorted_dic)  
 
   return render_template('result.html',datas=result)
 
